@@ -24,7 +24,7 @@ export default Route.extend({
               let card = lists.findBy('listId', parseInt(dataSet.listid)).cards.findBy('cardId', parseInt(cardId));
               lists.findBy('listId', parseInt(dataSet.listid)).cards.removeObject(card);
               if (Ember.isEmpty(lists.filterBy('listId', parseInt(toDataSet.listid)).cards)) {
-                lists.findBy('listId', parseInt(toDataSet.listid)).cards = [card];
+                Ember.set(lists.findBy('listId', parseInt(toDataSet.listid)),'cards',[card]);
               } else {
                 lists.findBy('listId', parseInt(toDataSet.listid)).cards.push(card);
               }
