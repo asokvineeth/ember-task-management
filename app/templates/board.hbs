@@ -1,0 +1,26 @@
+<div class="container  pad-top-100">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="input-group mb-3">
+            {{input type="text" placeholder="New Board Name" value=newBoardName class="form-control" required=true}}
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" {{action "createBoard" newBoardName}} type="button">Add Board</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{#each model as |board| }}
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{board.name}}</h5>
+            <a href="#" class="btn btn-primary" {{action 'viewBoard' board.id}}>Goto Board</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

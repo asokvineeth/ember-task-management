@@ -1,0 +1,36 @@
+.mar-12 {
+  margin: 12px;
+}
+
+.border-box {
+  margin: 20px 0;
+}
+
+.font-16 {
+  font-size: 16px;
+}
+
+.list-title {
+  border-bottom: 2px solid;
+  margin-bottom: 10px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.pad-top-100 {
+  padding-top: 100px;
+}
+
+.list {
+  width: 350px;
+}
+
+.scroll-container {
+  overflow: auto;
+}
+
+.left-33 {
+  left: 33.333%
+}

@@ -1,0 +1,54 @@
+<div class="container border-box list">
+  <div class="col-sm-12 mar-tb-20 list-title">
+    {{#unless isEdit}}
+      <i class="fa fa-trash mar-12 float-right font-16 pointer" {{action 'deleteList' list }}></i>
+      <i class="fa fa-edit mar-12 float-right font-16 pointer" {{action 'editList' true}}></i>
+      <i class="fas fa-arrows-alt mar-12 float-right font-16 move-list"></i>
+      <h3>{{list.name}}</h3>
+    {{else}}
+      <div class="input-group mb-3">
+        {{input type="text" placeholder="New List Name" value=newListName class="form-control col-sm-8" required=true}}
+        <br>
+        <i class="fa fa-save mar-12 pointer" {{action 'listUpdate' newListName list }}></i>
+        <i class="fa fa-window-close mar-12 pointer" {{action 'editList' false}}></i>
+      </div>
+    {{/unless}}
+  </div>
+  <div class="col-sm-12 pr-0 accordion md-accordion list-group col nested-sortable" id="accordion{{list.listId}}">
+    {{#each list.cards as |card| }}
+      <div class="card handle-card" id="card_{{card.cardId}}" data-listId="{{list.listId}}" data-boardId="{{boardId}}" data-cardId="{{card.cardId}}">
+        <div class="card-header" id="cardHeader{{card.cardId}}">
+          <h2 class="mb-0">
+            <button class="btn btn-none collapsed" type="button" data-toggle="collapse" data-target="#collapse{{card.cardId}}" aria-expanded="false" aria-controls="collapse{{card.cardId}}">
+              {{card.cardTitle}}
+            </button>
+            <i class="fa fa-trash mar-12 float-right font-16 pointer" {{action 'deleteCard' card list}}></i>
+            <i class="fas fa-arrows-alt mar-12 float-right font-16 pointer move-card"></i>
+          </h2>
+        </div>
+        <div id="collapse{{card.cardId}}" class="collapse" aria-labelledby="cardHeader{{card.cardId}}" data-parent="#accordion{{list.listId}}">
+          <div class="card-body">
+            {{task-card card=card cardUpdateAction='cardUpdateAction'}}
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <div class="card col-sm-12">
+    <div class="card-body">
+      <div class="input-group mb-3">
+        {{input type="text" placeholder="New Card Name" value=cardTitle class="form-control" required=true}}
+      </div>
+      <div class="input-group mb-3">
+        {{input type="text" placeholder="New Card Description" value=cardDesc class="form-control" required=true}}
+      </div>
+      <div class="input-group mb-3">
+        {{textarea class="form-control" rows="3" placeholder="Comment Here" value=cardComment}}
+      </div>
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" {{action "createCard" cardTitle cardDesc cardComment}} type="button">Add Card</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{yield}}

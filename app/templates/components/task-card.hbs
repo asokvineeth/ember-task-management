@@ -1,0 +1,48 @@
+{{#unless isEditTitle}}
+  <div class="row  mar-12">
+    <div class="col-sm-9">
+      {{card.cardTitle}}
+    </div>
+    <div class="col-sm-2">
+      <i class="fa fa-edit float-right pointer" {{action 'editCard' 'Title' true}}></i>
+    </div>
+  </div>
+{{else}}
+  <div class="input-group mb-3">
+    {{input type="text" placeholder="New List Name" value=newListName class="form-control col-sm-8" required=true}}
+    <div class="input-group-append">
+      <i class="fa fa-save pointer input-group-text" {{action 'updateCard' 'cardTitle' newListName}}></i>
+      <i class="fa fa-window-close pointer input-group-text" {{action 'editCard' 'Title' false}}></i>
+    </div>
+  </div>
+{{/unless}}
+{{#unless isEditDesc}}
+  <div class="row mar-12">
+    <div class="col-sm-9">
+      {{card.cardDesc}}
+    </div>
+    <div class="col-sm-2">
+      <i class="fa fa-edit float-right pointer" {{action 'editCard' 'Desc' true}}></i>
+    </div>
+  </div>
+{{else}}
+  <div class="input-group mb-3">
+    {{input type="text" placeholder="EnterDesc" value=newDesc class="form-control col-sm-8" required=true}}
+    <div class="input-group-append">
+      <i class="fa fa-save pointer input-group-text" {{action 'updateCard' 'cardDesc' newDesc }}></i>
+      <i class="fa fa-window-close pointer input-group-text" {{action 'editCard' 'Desc' false}}></i>
+    </div>
+  </div>
+{{/unless}}
+<div class="form-group">
+  <label for="exampleFormControlTextarea1 "><u>Comments</u></label>
+  {{#each card.comments as |comment| }}
+    <p class="card-text">{{comment.content}} <br>({{comment.commented_on}})</p>
+  {{/each}}
+  <div class="input-group mb-3">
+    {{textarea class="form-control" rows="3" placeholder="Comment Here" value=cardComment}}
+    <div class="input-group-prepend">
+      <button class="btn btn-outline-primary" {{action "addComment" cardComment}} type="button">Add Comment</button>
+    </div>
+  </div>
+</div>
