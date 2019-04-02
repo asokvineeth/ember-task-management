@@ -20,7 +20,6 @@ export default Component.extend({
         list.cards = [card];
       } else {
         list.cards.pushObject(card);
-        list.cards.sortBy("cardId");
       }
       this.sendAction('updateListAction', list, this.get('boardId'));
     },
