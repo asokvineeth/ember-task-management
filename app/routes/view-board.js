@@ -106,6 +106,7 @@ export default Route.extend({
       let list = {};
       list.name = newListName;
       list.cards = [];
+      let self=this;
       this.store.findRecord('board', boardId).then(function(board) {
         let lists = board.get('lists')
         if (Ember.isEmpty(board.get('lists'))) {
@@ -115,7 +116,8 @@ export default Route.extend({
           list.listId = board.get('lists').length;
           lists.push(list);
         }
-        lists.sortBy("listId");
+        self.sort(lists,"listId");
+        board.set('lists', lists);
         board.save();
       });
     },
