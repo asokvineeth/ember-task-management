@@ -17,16 +17,16 @@
   <div class="col-sm-12 pr-0 accordion md-accordion list-group col nested-sortable" id="accordion{{list.listId}}">
     {{#each list.cards as |card| }}
       <div class="card handle-card" id="card_{{card.cardId}}" data-listId="{{list.listId}}" data-boardId="{{boardId}}" data-cardId="{{card.cardId}}">
-        <div class="card-header" id="cardHeader{{card.cardId}}">
+        <div class="card-header" id="cardHeader_{{list.listId}}_{{card.cardId}}">
           <h2 class="mb-0">
-            <button class="btn btn-none collapsed" type="button" data-toggle="collapse" data-target="#collapse{{card.cardId}}" aria-expanded="false" aria-controls="collapse{{card.cardId}}">
+            <button class="btn btn-none collapsed" type="button" data-toggle="collapse" data-target="#collapse_{{list.listId}}_{{card.cardId}}" aria-expanded="false" aria-controls="collapse{{card.cardId}}">
               {{card.cardTitle}}
             </button>
             <i class="fa fa-trash mar-12 float-right font-16 pointer" {{action 'deleteCard' card list}}></i>
             <i class="fas fa-arrows-alt mar-12 float-right font-16 pointer move-card"></i>
           </h2>
         </div>
-        <div id="collapse{{card.cardId}}" class="collapse" aria-labelledby="cardHeader{{card.cardId}}" data-parent="#accordion{{list.listId}}">
+        <div id="collapse_{{list.listId}}_{{card.cardId}}" class="collapse" aria-labelledby="cardHeader_{{list.listId}}_{{card.cardId}}" data-parent="#accordion{{list.listId}}">
           <div class="card-body">
             {{task-card card=card cardUpdateAction='cardUpdateAction'}}
           </div>
