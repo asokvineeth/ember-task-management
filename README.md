@@ -1,5 +1,7 @@
 # ember-task-management
 A Simple Personal Task Management Application where you can create multiple board,list and card.
+What can be done using this application?
+You can create multiple boards inside which we can create lists to save our tasks. Each task can be rearranged and each list can be dragged and dropped to rearrange the position.
 
 <u>PreRequisites Needed</u>
 <ul>
