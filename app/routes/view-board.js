@@ -70,11 +70,8 @@ export default Route.extend({
             Ember.set(list, 'listId', event.newIndex);
           } else if (event.newIndex > event.oldIndex && list.listId <= event.newIndex && list.listId > event.oldIndex) {
             Ember.set(list, 'listId', parseInt(list.listId) - 1);
-          } else if (event.newIndex < event.oldIndex && card.cardId >= event.newIndex && list.listId < event.oldIndex) {
+          } else if (event.newIndex < event.oldIndex && list.listId >= event.newIndex && list.listId < event.oldIndex) {
             Ember.set(list, 'listId', parseInt(list.listId) + 1);
-          } else if (list.listId <= event.newIndex) {
-            let listId = parseInt(list.listId);
-            Ember.set(list, 'listId', event.newIndex < event.oldIndex ? listId + 1 : listId - 1);
           }
         });
         self.sort(lists, "listId");
