@@ -8,6 +8,11 @@ export default Route.extend({
   afterModel() {
     let self = this;
     Ember.run.schedule('afterRender', this, function() {
+      this.sortableCards(self);
+      this.sortableLists(self);
+    });
+  },
+  sortableCards(self) {
       var nestedSortables = [].slice.call(document.querySelectorAll('.nested-sortable'));
       for (var i = 0; i < nestedSortables.length; i++) {
         new Sortable(nestedSortables[i], {
@@ -15,7 +20,9 @@ export default Route.extend({
           handle: '.move-card',
           draggable: '.handle-card',
           animation: 150,
+        fallbackOnBody: true,
           onAdd: function(event) {
+          self.controller.set('loading', true);
             let toDataSet = event.to.dataset;
             let dataSet = event.item.dataset;
             self.store.findRecord('board', event.item.dataset.boardid).then(function(board) {
@@ -33,32 +40,48 @@ export default Route.extend({
                   list.cards.forEach(function(card, index) {
                     Ember.set(card, 'cardId', index);
                   });
+                self.sort(list.cards, 'cardId');
                 }
               });
               board.set('lists', lists);
               board.save();
+            self.controller.set('loading', false);
             });
           },
           onUpdate: function(event) {
-            self.onUpdate(event);
+          self.onUpdate(event, self);
+        },
+        onEnd(event) {
+          setTimeout(function(){
+            self.sortableCards(self);
+            self.sortableLists(self);
+          }, 1000);
           }
         });
       }
+  },
+  sortableLists(self) {
       var boardList = [].slice.call(document.querySelectorAll('.board-list'));
       for (var i = 0; i < boardList.length; i++) {
         new Sortable(boardList[i], {
           draggable: '.handleList',
           handle: '.move-list',
           animation: 150,
+        fallbackOnBody: true,
           onUpdate: function(event) {
-            self.onUpdate(event);
+          self.onUpdate(event, self);
+        },
+        onEnd(event) {
+          setTimeout(function(){
+            self.sortableCards(self);
+            self.sortableLists(self);
+          }, 1000);
           }
         });
       }
-    });
   },
-  onUpdate(event) {
-    let self = this;
+  onUpdate(event, self) {
+    self.controller.set('loading', true);
     self.store.findRecord('board', event.item.dataset.boardid).then(function(board) {
       let lists = board.get('lists');
       if (Ember.isEmpty(event.item.dataset.cardid)) {
@@ -88,11 +111,15 @@ export default Route.extend({
       }
       board.set('lists', lists);
       board.save();
+      Ember.run.schedule('afterRender', this, function() {
+        self.controller.set('loading', false);
+        self.refresh();
+      });
     });
   },
   sort(array, element) {
     array.sort(function(a, b) {
-      return b[element] - a[element]
+      return a[element] - b[element]
     });
   },
   actions: {
