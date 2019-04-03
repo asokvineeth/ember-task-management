@@ -34,16 +34,13 @@ export default Route.extend({
                     Ember.set(card, 'cardId', index);
                   });
                 }
-              })
+              });
               board.set('lists', lists);
               board.save();
             });
           },
           onUpdate: function(event) {
-            self.onUpdate(event.item.dataset);
-          },
-          onEnd(evt) {
-            document.activeElement.blur();
+            self.onUpdate(event);
           }
         });
       }
